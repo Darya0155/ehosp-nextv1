@@ -5,31 +5,26 @@ import axios from "axios"
 const SecurePage=({children})=>{
     const { data: session } = useSession()
 
- 
-  const f1=()=>{
-    axios.get("/api/hello").then(res=>{
-      console.log(res)
-    })
-  }
 
 
   if (session) {
     return (
       <>
-        Signed in as {session.user.email} <br />
-        token {session.accessToken} <br />
+        
         {children}
-        <button onClick={() => signOut()}>Sign out</button>
-        <button onClick={() => f1()}>hi</button>
+       
+        {/* <button onClick={() => signOut()}>Sign out</button>
+        */}
       </>
     )
   }
   return (
-     <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-      <button onClick={() => f1()}>hi</button>
-    </>
+     <div className="flex justify-center">
+      
+      <button className="bg-green-500  rounded-xl text-white hover:bg-green-800 py-3
+                         text-xl hover:border-20 w-96 mt-64" onClick={() => signIn()}>Sign in</button>
+      {/* <button onClick={() => f1()}>hi</button> */}
+    </div>
   )
 }
 export default SecurePage;

@@ -9,7 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@heroicons/react": "^2.0.18",
+    "@mui/material": "^5.14.15",
     "axios": "^1.6.0",
+    "heroicons": "^2.0.18",
     "jose": "4.11",
     "next": "^13.2.3",
     "next-auth": "^4.20.1",
@@ -17,7 +22,10 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
     "eslint": "8.52.0",
-    "eslint-config-next": "14.0.0"
+    "eslint-config-next": "14.0.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
   }
 }

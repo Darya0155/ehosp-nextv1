@@ -17,13 +17,17 @@ export const authOptions = {
       if (account) {
         token.accessToken = account.access_token
         token.id = profile.id
+        token.number=profile.phone_number
       }
       
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
         session.accessToken = token.accessToken
         return session
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
     }
   }
 
