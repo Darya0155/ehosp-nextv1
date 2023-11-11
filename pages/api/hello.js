@@ -3,8 +3,8 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "./auth/[...nextauth]"
 import { getToken } from "next-auth/jwt"
-import { DB, initTables } from "../../bankendservice/DynamoDB"
-import {  findUserAPPLinkByEmailAndPhone, findUserAPPLinkById, linkUserWithApp } from "../../bankendservice/DAO"
+
+
 
 
 
@@ -15,8 +15,7 @@ export default async (req, res) =>{
   
   const t=await getToken({req})
   console.log(t)
-  const rs=await findUserAPPLinkByEmailAndPhone(t.email,t.number)
-  console.log(rs)
+
   if (session) {
     res.send({
       content:
