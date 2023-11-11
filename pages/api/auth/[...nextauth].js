@@ -25,9 +25,6 @@ export const authOptions = {
     async session({ session, token }) {
         session.accessToken = token.accessToken
         return session
-    },
-    async signIn({ user, account, profile, email, credentials }) {
-      return true
     }
   }
 

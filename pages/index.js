@@ -1,4 +1,6 @@
-import SecurePage from "../ui-components/SecurePage";
+import DataTables from "../ui-components/DataTable"
+
+
 
 
 
@@ -6,9 +8,16 @@ import SecurePage from "../ui-components/SecurePage";
 
 
 export default function Home() {
+
+  const products=[
+    {code:"A",name:"N1"},
+    {code:"b",name:"N2"}
+  ]
   return (
-    <h1 className="bg-red-600">
-      Hello world!
-    </h1>
+    <div className="card">
+         
+    </div>
+    
   )
 }
+

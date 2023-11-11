@@ -1,6 +1,9 @@
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import * as React from 'react';
 import Bars4Icon from '@heroicons/react/24/outline/Bars4Icon'
+import { useSelector } from 'react-redux';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 
 const drawerWidth = 240;
@@ -8,24 +11,33 @@ const drawerWidth = 240;
 function AdminBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const {appDetails}=useSelector(state=>state.app)
+  const route=useRouter()
+  
+  
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+ const menu=[
+  {text:"Dashboard",action:()=>route.push("/admin"),icon:"H"},
+  {text:"ProductType",action:()=>route.push("/admin/productType"),icon:"P"},
+  {text:"Product",action:()=>route.push("/admin/product"),icon:"P"}
+ ]
+
 
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-
-            <ListItemButton>
+        {menu.map((link, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton onClick={link.action}>
               <ListItemIcon>
-                {index % 2 === 0 ? "A ": "B"}
+                {link.icon}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={link.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -58,7 +70,7 @@ function AdminBar(props) {
             <Bars4Icon className="h-8 w-8"></Bars4Icon>
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            {appDetails?JSON.parse(appDetails.APP_DETAILS.S).shop_name:"Admin Pannel"}
           </Typography>
         </Toolbar>
       </AppBar>
