@@ -64,3 +64,14 @@ export const enableDisableProductType=(pid,status)=>{
   });
 }
 
+export const addProduct=(data)=>{
+  return new Promise((res, rej) => {
+    POST("/api/admin/product/addProduct",data)
+      .then((apiResponse) => {
+        res(true);
+      })
+      .catch((ApiError) => {
+        res(false);
+      });
+  });
+}

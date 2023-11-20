@@ -1,5 +1,7 @@
 import { addProductTypeDB, enableDisableProductTypeDB, getAllProductTypeByAppIdDB } from "./DAO/PRODUCT_TYPE";
 import { addUserAppLink, findUserAPPLinkByEmailAndPhone } from "./DAO/USER_APP_LINK";
+import { uploadToS3 } from "./S3";
+import { addProductDB } from "./DAO/PRODUCT";
 
 
 export const  isAppLinkedToUser=async (res,email,phone)=>{
@@ -71,3 +73,28 @@ export const enableDisableProductType=async (res,email,phone,pid,status)=>{
    }
    
 }
+
+export const uploadImageToS3=async ({data,type,name})=>{
+   const params ={
+      Body:Buffer.from(data.replace(/^data:image\/\w+;base64,/, ""),'base64'),
+      Bucket:process.env.AWS_BUCKET_NAME,
+      Key:name,
+      ContentType:type
+    };
+    
+   return await uploadToS3(params)
+}
+
+export const addProduct=async (res,email,phone,data)=>{
+   const {Items} =await findUserAPPLinkByEmailAndPhone(email,phone);
+    data["appId"]=Items[0].ID.S;
+    const {Location}=await uploadImageToS3(data.image)
+    data["image"]=Location
+    
+    addProductDB(data).then(dbResponse=>{
+      res.status(200).send({status:"success"})
+    }).catch(error=>{
+      console.log(error)
+      res.status(500).send({status:"Failed"})
+    })
+} 

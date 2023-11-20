@@ -84,9 +84,8 @@ export default function Home() {
                 true,
                 <AddProductForm
                   actionAfterSubmit={() => {
-                    rightDrawer(false,null),
+                     rightDrawer(false,null),
                      loadProductTypes();
-                     snakbar(true,"S","Added will be available for use in while !")
                   }}
                 />
               )
@@ -100,6 +99,8 @@ export default function Home() {
           dataRowsHeader={dataTableHeaders}
           dataRows={productTypeData}
         />
+
+        <img src="https://arya-bucket.s3.amazonaws.com/a3177480-8779-11ee-9a24-d9a0c1d1290b.png"  ></img>
       </AdminBar>
     </CommonParent>
   );

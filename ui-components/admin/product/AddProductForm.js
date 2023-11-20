@@ -11,18 +11,23 @@ import { userAgentFromString } from "next/server";
 import { useForm } from "react-hook-form";
 import { AlignContentRight } from "../../AlignContentRight";
 import {
+  addProduct,
   addProductType,
   getAllProductTypeByAppId,
 } from "../../../FrontEndServices/FEService";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ImageFileUpload } from "../../ImageFileUpload";
+import { useCommonParent } from "../../CommonParent";
+
 
 
 export const AddProductForm = ({ actionAfterSubmit }) => {
   const { appDetails } = useSelector((state) => state.app);
   const [productType, setProductType] = useState([]);
-  const [imageDataUrl,setImageDataUrl] = useState([]);
+  const { backdrop, rightDrawer,snakbar } = useCommonParent();
+  const [image,setImage] = useState([]);
+  
   const {
     register,
     handleSubmit,
@@ -45,12 +50,15 @@ export const AddProductForm = ({ actionAfterSubmit }) => {
  
 
   const onSubmit = (data) => {
-   
-    data["image"]=imageDataUrl
-    console.log(data)
-
-    // reset.apply()
-    // actionAfterSubmit()
+    data["image"]=image
+    addProduct(data).then(res=>{
+      console.log(res)
+      reset.apply()
+      snakbar(true,"S","Added will be available for use in while !")
+      actionAfterSubmit()
+    }).catch(err=>{
+      snakbar(true,"E","Something went wrong")
+    })
   };
    
 
@@ -103,9 +111,9 @@ export const AddProductForm = ({ actionAfterSubmit }) => {
         />
 
        
-        <ImageFileUpload  imageDataUrl={imageDataUrl} setImageDataUrl={setImageDataUrl} />
+        <ImageFileUpload   maxSizeInKB={1024} setImageBinary={setImage}/>
         
-
+        
         <FormControlLabel
           control={<Switch defaultChecked {...register("enabled")} />}
           label="isEnabled"
